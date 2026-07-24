@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konkur Center 1406 Countdown</title>
+    <!-- 
+        ========================================================
+        👨‍💻 DEVELOPED FOR MAHDI (RANK 1 KONKUR 1406)
+        🎨 DESIGN: Bento Grid (30%) + Glassmorphism (40%) + Neumorphism (30%)
+        ========================================================
+    -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        /* ================= VARIABLES & THEMES ================= */
+        :root {
+            /* Pearl White Theme (Default) */
+            --bg-color: #f8f9fa;
+            --glass-bg: rgba(255, 255, 255, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --neu-shadow-1: 8px 8px 16px #e0e5ec;
+            --neu-shadow-2: -8px -8px 16px #ffffff;
+            --text-main: #2d3436;
+            --text-muted: #636e72;
+            --accent-1: #ffb8b8; /* Pastel Red */
+            --accent-2: #c7ecee; /* Pastel Blue */
+            --accent-3: #f8efba; /* Pastel Yellow */
+            --accent-4: #badc58; /* Pastel Green */
+        }
+
+        [data-theme="dark"] {
+            /* Deep Dark / Luxury Blue Theme */
+            --bg-color: #0f172a; /* Deep Slate Blue */
+            --glass-bg: rgba(30, 41, 59, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --neu-shadow-1: 10px 10px 20px #0a0f1c;
+            --neu-shadow-2: -10px -10px 20px #141f38;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent-1: #ff7675;
+            --accent-2: #74b9ff;
+            --accent-3: #ffeaa7;
+            --accent-4: #55efc4;
+        }
+
+        /* ================= RESET & BASE ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* ================= MAIN CONTAINER (BENTO GRID) ================= */
+        .bento-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            border-radius: 30px;
+            /* Neumorphism Base */
+            background: var(--bg-color);
+            box-shadow: var(--neu-shadow-1), var(--neu-shadow-2);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Header Span Full Width */
+        .header {
+            grid-column: span 2;
+            text-align: center;
+            padding: 20px;
+            border-radius: 20px;
+            /* Glassmorphism Effect */
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        /* Countdown Boxes */
+        .time-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            border-radius: 25px;
+            /* Mixed Neo & Glass */
+            background: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--glass-border);
+            box-shadow: inset 4px 4px 10px rgba(0,0,0,0.02), var(--neu-shadow-1);
+        }
+
+        .time-box.days { border-top: 4px solid var(--accent-1); }
+        .time-box.hours { border-top: 4px solid var(--accent-2); }
+        .time-box.mins { border-top: 4px solid var(--accent-3); }
+        .time-box.secs { border-top: 4px solid var(--accent-4); }
+
+        .time-value {
+            font-size: 3rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .time-label {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* ================= CONTROLS ================= */
+        .controls {
+            grid-column: span 2;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-color);
+            box-shadow: var(--neu-shadow-1), var(--neu-shadow-2);
+            fill: var(--text-main);
+        }
+
+        .btn:active {
+            box-shadow: inset 4px 4px 10px rgba(0,0,0,0.1), inset -4px -4px 10px rgba(255,255,255,0.5);
+        }
+
+        .btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* ================= SOCIAL LINKS ================= */
+        .social-links {
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            background: var(--bg-color);
+            box-shadow: var(--neu-shadow-1), var(--neu-shadow-2);
+            fill: var(--text-main);
+        }
+
+        .social-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+        @media (max-width: 480px) {
+            .bento-container {
+                padding: 15px;
+                gap: 10px;
+                border-radius: 20px;
+            }
+            .time-value { font-size: 2rem; }
+            .time-box { padding: 15px; border-radius: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main App Container -->
+    <div class="bento-container" id="export-target">
+        
+        <div class="header">
+            <h1>کنکور سراسری ۱۴۰۶</h1>
+            <p>شمارش معکوس تا موفقیت</p>
+        </div>
+
+        <div class="time-box days">
+            <span class="time-value" id="days">00</span>
+            <span class="time-label">روز</span>
+        </div>
+        
+        <div class="time-box hours">
+            <span class="time-value" id="hours">00</span>
+            <span class="time-label">ساعت</span>
+        </div>
+
+        <div class="time-box mins">
+            <span class="time-value" id="mins">00</span>
+            <span class="time-label">دقیقه</span>
+        </div>
+
+        <div class="time-box secs">
+            <span class="time-value" id="secs">00</span>
+            <span class="time-label">ثانیه</span>
+        </div>
+
+        <div class="controls" data-html2canvas-ignore>
+            <!-- Dark Mode Toggle Button (SVG) -->
+            <button class="btn" id="theme-toggle" title="تغییر تم">
+                <svg viewBox="0 0 24 24"><path d="M12 21c-4.962 0-9-4.038-9-9s4.038-9 9-9 9 4.038 9 9-4.038 9-9 9zm0-16c-3.859 0-7 3.141-7 7s3.141 7 7 7 7-3.141 7-7-3.141-7-7-7zm0 12c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"/></svg>
+            </button>
+            
+            <!-- Export PNG Button (SVG) -->
+            <button class="btn" id="export-btn" title="خروجی عکس">
+                <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Social Media Links (Exclusively SVG) -->
+    <div class="social-links" data-html2canvas-ignore>
+        <!-- Instagram -->
+        <a href="https://instagram.com/mm.keshavarzz" target="_blank" class="social-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <!-- Telegram -->
+        <a href="https://t.me/ke_mim_mim" target="_blank" class="social-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.68c.223-.198-.054-.31-.346-.11l-6.4 4.02-2.76-.89c-.6-.18-.61-.6.13-.89l10.8-4.16c.5-.18.94.11.806.92z"/></svg>
+        </a>
+        <!-- X (Twitter) -->
+        <a href="https://x.com/s_keshavarz" target="_blank" class="social-icon">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+    </div>
+
+    <script>
+        // ================= LOGIC & STATE MANAGEMENT =================
+        
+        // 1. Target Date (Konkur 1406 - Estimated July 2027)
+        // You can change this date!
+        const targetDate = new Date("July 10, 2027 08:00:00").getTime();
+
+        // 2. Countdown Logic
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                document.querySelector('.header p').innerText = "کنکور برگزار شد! به امید موفقیت 🎉";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Add leading zero if needed
+            document.getElementById("days").innerText = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+            document.getElementById("mins").innerText = minutes.toString().padStart(2, '0');
+            document.getElementById("secs").innerText = seconds.toString().padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Initial call
+
+        // 3. Dark Mode & Local Storage
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        
+        // Check local storage
+        if(localStorage.getItem('konkurTheme') === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            if(document.body.getAttribute('data-theme') === 'dark') {
+                document.body.removeAttribute('data-theme');
+                localStorage.setItem('konkurTheme', 'light');
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('konkurTheme', 'dark');
+            }
+        });
+
+        // 4. Export to High-Res PNG (html2canvas)
+        document.getElementById('export-btn').addEventListener('click', () => {
+            const element = document.getElementById('export-target');
+            
+            // Temporary styles for export aspect ratio handling
+            element.style.borderRadius = "0px"; 
+
+            html2canvas(element, {
+                scale: 3, // High quality
+                backgroundColor: getComputedStyle(document.body).getPropertyValue('--bg-color'),
+                useCORS: true
+            }).then(canvas => {
+                element.style.borderRadius = "30px"; // Reset border radius
+                
+                let link = document.createElement('a');
+                link.download = 'Konkur_Center_Countdown.png';
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+            });
+        });
+    </script>
+</body>
+</html>
